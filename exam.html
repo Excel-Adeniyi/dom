@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<head>
+  </head>
+<h1 href="exam.html">Quiz on important Fact</h1>
+<body>
+    <script type="type/javascript" href="jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+      (function(){
+
+      function buildQuiz(){
+      const output= [];
+
+      myQuestions.forEach(
+        (currentQuestion, questionNumber) => 
+          const answers= [];
+
+          for(letter in currentQuestion.answers){
+
+            answers.push(
+             <label>
+              <input type="radio" name="question${questionNumber}" value="${letter}">
+              ${letter} :
+            ${currentQuestion.answers[letter]}
+            </label>
+            );
+          }
+
+          output.push(
+            '<div class="question"> ${currentQuestion.question} </div>
+            <div class="answers"> ${answers.join(" ")} </div>'
+          );
+        });
+
+      quizContainer.innerHTML = output.join("");
+      }
+      function showResult(){
+        const answerContainers= quizContainer.queryselectorAll(".answer");
+
+        let numCorrect = 0
+
+        myQuestions.forEach( (currentQuestion, questionNumber) =>
+        {
+          const answerContainer = answerContainers[questionNumber];
+          const selector = 'input[name=questtion$ {questionNumber}]:checked';
+          const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+
+          if (userAnswer === currentQuestion.correctAnswer){
+            numCorrect++;
+      //correctAnswer
+            answerContainers[questionNumber].style.color = "lightgreen";
+
+      }
+      else {
+
+      //incorrectAnswer
+            answerContainers[questionNumber].style.color = "red";
+          }
+        });
+        resultsContainer.innerHTML = '${numCorrect} out of ${myQuestions.length}';
+      }
+
+      const quizContainer = document.getElementById("quiz");
+      const resultsContainer = document.getElementById("results");
+      const submitBotton = document.getElementById("submit");
+      const myQuestions = [
+        {
+          question: "Who is the strongest?",
+          answers: {
+            a: "Superman",
+            b: "The Terminator",
+            c: "Waluigi, Obviously"
+          },
+          correctAnswer:"c"
+        },
+        {
+          Question:"what is the best site over created?",
+          answers:{
+            a: "sitepoint",
+            b: "Simple steps code",
+            c: "Trick question: they are both the best"
+          },
+          correctAnswer: "C"
+
+        }
+      ];
+      buildQuiz();
+      submitButton.addEventListener("click", showResults);
+      })
+      ();
+    })
+</script>
+
+<div class="quiz-container">
+<div id="quiz"></div>
+</div>
+<button id="previous">previous Question</button>
+<<button id="next">Next Question</button>
+<button id="submit">Submit quiz</button>
+<div id="results"></div>
+</body>
+</html>
